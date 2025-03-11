@@ -1,0 +1,28 @@
+{% extends "index_base.html" %}
+
+{% block content %}
+<h2>Lista de Materiais</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Local</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for material in materiais %}
+        <tr>
+            <td>{{ material[0] }}</td>
+            <td>{{ material[1] }}</td>
+            <td>{{ material[2] }}</td>
+            <td>{{ material[3] }}</td>
+            <td>{{ material[4] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+

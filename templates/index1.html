@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiais - Página 1</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Materiais - ABT-53 3º GBM</h1>
+    <h2>Página 1</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Local</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        {% for material in materiais %}
+        <tr>
+            <td>{{ material[0] }}</td>
+            <td>{{ material[1] }}</td>
+            <td>{{ material[2] }}</td>
+            <td>{{ material[3] }}</td>
+            <td>{{ material[4] }}</td>
+            <td>
+                <button onclick="atualizarStatus({{ material[0] }}, 'Operante')">Operante</button>
+                <button onclick="atualizarStatus({{ material[0] }}, 'Não Operante')">Não Operante</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/gerar_pdf">Baixar Relatório</a>
+    <a href="/logout">Sair</a>
+</body>
+<script>
+    function atualizarStatus(id, status) {
+        fetch('/atualizar_status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `material_id=${id}&status=${status}`
+        }).then

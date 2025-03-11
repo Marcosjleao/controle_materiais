@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Gerenciar Usuários</h1>
+    <form action="{{ url_for('criar_usuario') }}" method="post">
+        <input type="text" name="username" placeholder="Novo usuário" required>
+        <input type="password" name="password" placeholder="Senha" required>
+        <button type="submit">Criar Usuário</button>
+    </form>
+    <br>
+    <a href="{{ url_for('index', page=1) }}">Voltar</a>
+</body>
+</html>

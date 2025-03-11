@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiais - ABT-53 3° GBM - Página {{ page }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Materiais - ABT-53 3° GBM</h1>
+    <h2>Página {{ page }}</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Local</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        {% for material in materiais %}
+        <tr>
+            <td>{{ material[0] }}</td>
+            <td>{{ material[1] }}</td>
+            <td>{{ material[2] }}</td>
+            <td>{{ material[3] }}</td>
+            <td>{{ material[4] }}</td>
+            <td>
+                <button class="btn-operante" onclick="atualizarStatus({{ material[0] }}, 'Operante')">Operante</button>
+                <button class="btn-nao-operante" onclick="atualizarStatus({{ material[0] }}, 'Não Operante')">Não Operante</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="paginacao">
+        {% if page > 1 %}
+            <a href="{{ url_for('index', page=page-1) }}" class="btn">Página Anterior</a>
+        {% endif %}
+        {% if page < total_pages %}
+            <a href="{{ url_for('index', page=page+1) }}" class="btn">Próxima Página</a>
+        {% endif %}
+    </div>
+
+    <form action="/gerar_pdf" method="post">
+    <label for="observacao">Observações:</label><br>
+    <textarea id="observacao" name="observacao" rows="4" cols="50"></textarea><br>
+    <button type="submit" style="background-color: orange; color: white; padding: 10px;">Baixar Relatório</button>
+</form>
+
+
+</body>
+<script>
+    function atualizarStatus(id, status) {
+        fetch('/atualizar_status', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `material_id=${id}&status=${status}`
+        }).then(response => response.json())
+          .then(data => alert(data.message));
+    }
+</script>
+</html>
